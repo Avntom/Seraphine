@@ -3,6 +3,7 @@ name: Build Seraphine
 on:
   workflow_dispatch:
 
+
 jobs:
   build-seraphine:
     runs-on: windows-latest
@@ -44,11 +45,12 @@ jobs:
       with:
         name: Seraphine
         path: ./
-    - name: Push to release
-      uses: ncipollo/release-action@v1
+    - name: Upload
+      uses: svenstaro/upload-release-action@v2
       with:
-        name: ${{ env.VERSION }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ env.VERSION }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        replacesArtifacts: false
-        artifacts: Seraphine.7z
+        file: Seraphine.7z
+        asset_name: Seraphine.7z
+        prerelease: false
+        overwrite: false
